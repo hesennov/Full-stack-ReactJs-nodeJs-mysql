@@ -21,7 +21,6 @@ function App() {
         wage,
       })
       .then(() => console.log("succes"));
-    getEmployee();
   };
 
   const getEmployee = () => {
@@ -31,6 +30,15 @@ function App() {
     // .then((response) => {
     // console.log(response);
     // });
+  };
+  const deleteEmployee = (id) => {
+    axios.delete(`http://localhost:5000/delete/${id}`).then((response) => {
+      setEmployeeList(
+        employeeList.filter((val) => {
+          return val.id != id;
+        })
+      );
+    });
   };
   return (
     <div className="App">
@@ -86,6 +94,13 @@ function App() {
                   <li>Country: {val.country}</li>
                   <li>Position: {val.position}</li>
                   <li>Wage: {val.wage}</li>
+                  <button
+                    onClick={() => {
+                      deleteEmployee(val.id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               );
             })}
